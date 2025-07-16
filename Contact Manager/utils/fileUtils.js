@@ -1,23 +1,12 @@
 const fs = require("fs");
 const path = "./contacts.json";
-
-// const load = function () {
-//   let objArr = loadFile();
-//   for (obj of objArr) {
-//     if (obj.email === email) {
-//       return objArr;
-//     } else {
-//       console.error(`✗ Error: No contact found with email: ${email}`);
-//     }
-//   }
-// };
-
+const fileName = path.split('/').pop();
 //this should only save the data
 const save = function (obj) {
+    
   try {
-    fs.writeFileSync(obj, null, 2);
-    console.log(`✓ Contact added: ${newContact.name}`);
-    console.log(`✓ Contacts saved to ${path} `);
+    fs.writeFileSync(path,JSON.stringify(obj, null, 2),'utf-8');
+    console.log(`✓ Contacts saved to ${fileName} `);
     return true;
   } catch (err) {
     console.error("✗ Failed to save contact:", err.message);
@@ -26,18 +15,22 @@ const save = function (obj) {
 };
 
 const load = function () {
-  console.log("\nLoading contacts from contacts.json...\n");
+  console.log(`\nLoading contacts from ${fileName}...\n`);
   if (!fs.existsSync(path)) {
     console.log("✗ File not found - creating new contact list");
     return [];
   }
 
   try {
-    const data = fs.readFileSync(path, "utf-8");
+    let data = fs.readFileSync(path, "utf-8");
+    // console.log(data);
+    data = JSON.parse(data)
+    console.log(data.length);
+    
     if (data.length > 0) {
-      console.log(`✓ Loaded ${objArr.length} contacts`);
+      console.log(`✓ Loaded ${data.length} contacts`);
     }
-    return JSON.parse(data);
+    return data;
   } catch (err) {
     switch (err.code) {
       case "ENOENT":
@@ -45,7 +38,7 @@ const load = function () {
         break;
       case "ENOSPC":
         console.error("Disk is full");
-
+        break;
       default:
         console.error(`✗ Some other error: ${err.code}`);
 

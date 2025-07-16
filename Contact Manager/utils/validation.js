@@ -1,9 +1,13 @@
 
 const validatePhone = function(phone){
+    const phoneRegex =  /^\d{3}-\d{3}-\d{4}$/
     return /^\d{3}-\d{3}-\d{4}$/.test(phone);
 }
 
+
 const validateEmail = function(email){
+    console.log(`email = ${email}`);
+    
 if (!email) {
     console.log("✗ Error: Email cannot be empty");
     return false;
@@ -18,15 +22,9 @@ if (!email) {
   if (!emailRegex.test(email)) {
     console.log("✗ Error: Invalid email format");
     return false;
-  }}
+  }
+return true;
+}
 
 
 module.exports = {validateEmail,validatePhone};
-// console.log(validateEmail("tuzriel66ye@yahoo.com"));
-// console.log(validateEmail("tuzriel66yeyahoo.com"));
-// console.log(validatePhone("1234567890"));
-// console.log(validatePhone("123-456-7890"));
-
-// const validate = function(phone){
-    
-// }
